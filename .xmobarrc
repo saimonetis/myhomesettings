@@ -1,0 +1,22 @@
+Config { font = "-*-Fixed-Bold-R-Normal-*-13-*-*-*-*-*-*-*"
+       , bgColor = "black"
+       , fgColor = "grey"
+--       , position = Static{xpos=0, ypos=0, width=1919, height=16}
+       , position = Top
+       , lowerOnStart = True
+       , commands = [ Run Cpu ["-L","3","-H","50","--normal","green","--high","red"] 10
+                    , Run Memory ["-t","<usedratio>%"] 10
+                    , Run StdinReader
+                    , Run Date "%a %b %_d %H:%M:%S" "date" 10
+                    , Run Weather "EFHF" [ "--template", "<skyCondition> | <fc=#4682B4><tempC></fc>Â°C | <fc=#4682B4><rh></fc>% | <fc=#4682B4><pressure></fc>hPa"
+                                         ] 3000
+                    , Run Kbd [ ("gb" , "<fc=#dd0000>/</fc><fc=#3333dd>/</fc><fc=#ffffff>/</fc><fc=#dd0000>/</fc><fc=#3333dd>/</fc><fc=#ffffff>/</fc>")
+                              , ("fi" , "<fc=#ffffff>//</fc><fc=#3333dd>//</fc><fc=#ffffff>//</fc>")
+                              , ("es" , "<fc=#dd0000>//</fc><fc=#dddd00>//</fc><fc=#dd0000>//</fc>")
+                              ]
+                    , Run PipeReader "/home/eguzlva/todo" "todo"
+                    ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = "%StdinReader% | To do: %todo%}<fc=#ee9a00>%date%</fc>{%cpu% Mem: %memory% | %kbd% | %EFHF%"
+       }
